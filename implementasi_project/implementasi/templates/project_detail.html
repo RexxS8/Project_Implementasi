@@ -1,0 +1,120 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail</title>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+        }
+        .back-button-container {
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        .go-back-btn {
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+        .go-back-btn:hover {
+            color: red;
+        }
+        .title-container {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 15px;
+        }
+        h2 {
+            text-align: center;
+            margin: 0;
+        }
+        div {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        p {
+            margin: 10px 0;
+            margin-left: 35%;
+            padding: 7px;
+        }
+        strong {
+            color: #333;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .file-preview-list {
+            margin-left: 35%;
+            padding: 7px;
+        }
+        .file-preview-item {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button-container">
+        <b class="go-back-btn" onclick="goBack()">&#10006;</b>
+    </div>
+    <div class="title-container">
+        <h2>Project Details</h2>
+    </div>
+
+    <div>
+        <p><strong>Name:</strong> {{ project.name }}</p>
+        <p><strong>Tujuan:</strong> {{ project.tujuan }}</p>
+        <p><strong>Aktivitas:</strong> {{ project.activity }}</p>
+        <p><strong>Project Management Start Date:</strong> {{ project.project_management_start_date }}</p>
+        <p><strong>Project Management End Date:</strong> {{ project.project_management_end_date }}</p>
+        <p><strong>Project Management Status:</strong> {{ project.project_management_status }}</p>
+        <p><strong>Implementation Start Date:</strong> {{ project.implementation_start_date }}</p>
+        <p><strong>Implementation End Date:</strong> {{ project.implementation_end_date }}</p>
+        <p><strong>Implementation Status:</strong> {{ project.implementation_status }}</p>
+        <p><strong>Supervisor:</strong> {{ project.supervisor }}</p>
+        <p><strong>Anggota:</strong> {{ project.anggota|join:", " }}</p>
+        <p><strong>Notes:</strong> {{ project.notes }}</p>
+        <div class="file-preview-list">
+            <p><strong>Upload Files:</strong></p>
+            {% if project.files.all %}
+                {% for file in project.files.all %}
+                    <div class="file-preview-item">
+                        <a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No Files</p>
+            {% endif %}
+        </div>
+        <div class="file-preview-list">
+            <p><strong>Captured Photos:</strong></p>
+            {% if project.photos.all %}
+                {% for photo in project.photos.all %}
+                    <div class="file-preview-item">
+                        <a href="{{ photo.photo.url }}" target="_blank">{{ photo.photo.name }}</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No Photos</p>
+            {% endif %}
+        </div>
+        <p><strong>Akurasi:</strong> {{ project.accuracy }}%</p>
+    </div>
+
+    <script>
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

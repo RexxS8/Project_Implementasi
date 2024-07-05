@@ -1,0 +1,264 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Form styles (used in login.html and project_update.html) */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="date"],
+form select {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Table styles (used in project_list.html) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Button styles (global usage) */
+.button {
+    display: inline-block;
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #005f6b;
+}
+
+/* Error popup styles (used in login.html) */
+#errorPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid red;
+    z-index: 1000;
+}
+
+#errorMessage {
+    color: red;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Homepage styles (used in homepage.html) */
+nav {
+    background-color: #333;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.container h2,
+.container p {
+    margin-bottom: 15px;
+}
+
+.container a.button {
+    display: block;
+    width: 200px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.container a.button:hover {
+    background-color: #45a049;
+}
+
+/* Project List styles (used in project_list.html) */
+.back-button {
+    display: inline-block;
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.back-button:hover {
+    background-color: #da190b;
+}
+
+#searchBox {
+    width: 200px;
+    margin-left: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+#delete, #download {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#delete:hover, #download:hover {
+    background-color: #da190b;
+}
+
+.selectProject {
+    margin-left: 5px;
+}
+
+/* Project Update styles (used in project_update.html) */
+#name {
+    width: calc(100% - 20px);
+}
+
+#status {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.notification-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.notification-popup p {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+.notification-popup button {
+    margin-top: 10px;
+}
+
+/* Project Detail styles (used in project_detail.html) */
+.project-detail {
+    margin-top: 20px;
+}
+
+.project-detail p {
+    margin-bottom: 5px;
+}

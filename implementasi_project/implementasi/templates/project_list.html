@@ -1,0 +1,452 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Data Implementation System</title>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-right a {
+            padding: 5px 10px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            height: 20px;
+            width: 50px;
+        }
+
+        .header-right span {
+            font-weight: 500;
+        }
+
+        .back-button-container {
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+            margin-top: -50px;
+        }
+
+        .go-back-img {
+            width: 30px; /* Adjust the size as needed */
+            height: 30px; /* Adjust the size as needed */
+            cursor: pointer;
+        }
+
+        .go-back-btn {
+            text-decoration: none;
+        }
+
+        .go-back-btn:hover {
+            color: red;
+        }
+
+        .title-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .container h3 {
+            font-size: smaller;
+            font-weight: lighter;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .search-download {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #searchBox {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            width: 300px;
+            height: 16px;
+            margin-right: auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-button {
+            background-color: white;
+            color: black;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .action-button svg {
+            margin-right: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #EAECF0;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .file-preview-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .file-preview-item {
+            margin-right: 10px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .status-selesai {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-gagal {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .status-berlangsung {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        /* Custom styling to match the image */
+        .container {
+            margin-top: 50px;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+        }
+
+        table th:first-child, table td:first-child {
+            width: 40px;
+            text-align: center;
+        }
+
+        table th:nth-child(2), table td:nth-child(2) {
+            width: 200px;
+        }
+
+        table th:nth-child(3), table td:nth-child(3) {
+            width: 200px;
+        }
+
+        table th:nth-child(4), table td:nth-child(4),
+        table th:nth-child(5), table td:nth-child(5),
+        table th:nth-child(6), table td:nth-child(6) {
+            width: 120px;
+            text-align: center;
+        }
+
+        table th:nth-child(7), table td:nth-child(7) {
+            width: 200px;
+            text-align: center;
+        }
+
+        table th:last-child, table td:last-child {
+            width: 135px;
+            text-align: center;
+        }
+
+        .action-buttons-container {
+            display: flex;
+            gap: 5px;
+            height: 40px;
+            align-items: center;
+        }
+
+        .action-button-table {
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Sys1mplement</h1>
+        </div>
+        <div class="header-right">
+            <span> <img src="https://img.icons8.com/?size=100&id=zxB19VPoVLjK&format=png&color=000000" alt="User Icon" class="user-icon" width="15" height="15"> USER</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="back-button-container">
+            <a class="go-back-btn" onclick="goBack()">
+                <img src="https://img.icons8.com/?size=100&id=sOeJvxVWHbVy&format=png&color=000000" alt="Go back" class="go-back-img">
+            </a>
+        </div>
+        <div class="title-container">
+            <h2>Data Implementation System</h2>
+        </div>
+        <h3>Data dibawah ini merupakan hasil data yang sudah di Input melalui Project Management</h3>
+        <div class="search-download">
+            <input type="text" id="searchBox" placeholder="Search Project" oninput="filterProjects()">
+            <div class="action-buttons">
+                <button id="delete" class="action-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v7a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zM8 5.5A.5.5 0 0 1 8.5 6v7a.5.5 0 0 1-1 0V6A.5.5 0 0 1 8 5.5zM10.5 5.5A.5.5 0 0 1 11 6v7a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zM4.5 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1H14.5a.5.5 0 0 1 0 1h-1.591l-1 10H4.09l-1-10H1.5a.5.5 0 0 1 0-1H4.5zM4.118 1h7.764a.5.5 0 0 1 .498.443L12.5 3H3.5l.118-1.557A.5.5 0 0 1 4.118 1zM3.5 4h9l-.87 9H4.37L3.5 4z"/>
+                    </svg>
+                    Delete
+                </button>
+                <button id="download" class="action-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9V11h15V9.9l-3.9 3.9v-4.4h-1.2v4.4l-4-4v4.4H3.4V9.9l-2.9 2.9zm5.6 1.5v-7.4h-.7v7.4l3 3v-7.4H9V14L7 11.4v-.9H6.1v.9L4.1 14v-2.6z"/>
+                    </svg>
+                    Download
+                </button>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                    <th>Project Name</th>
+                    <th>Activity</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Files</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="projectTableBody">
+                {% for project in projects %}
+                <tr>
+                    <td><input type="checkbox" class="selectProject" data-project-id="{{ project.id }}"></td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.activity }}</td>
+                    <td>{{ project.implementation_start_date }}</td>
+                    <td>{{ project.implementation_end_date }}</td>
+                    <td>
+                        <span class="status status-{{ project.implementation_status|lower }}">{{ project.implementation_status }}</span>
+                    </td>
+                    <td>
+                        <div class="file-preview-list">
+                            {% for file in project.files.all %}
+                            <div class="file-preview-item">
+                                <a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a>
+                            </div>
+                            {% endfor %}
+                            {% for photo in project.photos.all %}
+                            <div class="file-preview-item">
+                                <a href="{{ photo.photo.url }}" target="_blank">{{ photo.photo.name }}</a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td class="action-buttons-container">
+                        <a href="{% url 'project_update' project.id %}" class="action-button-table">Update</a>
+                        <a href="{% url 'project_detail' project.id %}" class="action-button-table">Detail</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.getElementById('delete').addEventListener('click', function () {
+            const selectedProjects = getSelectedProjectIds();
+            if (selectedProjects.length > 0) {
+                if (confirm(`Are you sure you want to delete ${selectedProjects.length} project(s)?`)) {
+                    fetch('/api/projects/delete/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ projects: selectedProjects })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                window.location.reload(); // Refresh the page after successful deletion
+                            } else {
+                                console.error('Delete failed:', data.error_message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            } else {
+                alert('Please select at least one project to delete.');
+            }
+        });
+
+        document.getElementById('download').addEventListener('click', function () {
+            const selectedProjects = getSelectedProjectIds();
+            if (selectedProjects.length > 0) {
+                fetch(`/api/projects/download/?projects=${selectedProjects.join(',')}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'projects.pdf';  // Download as PDF
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                alert('Please select at least one project to download.');
+            }
+        });
+
+        function getSelectedProjectIds() {
+            const selectedProjects = [];
+            document.querySelectorAll('.selectProject:checked').forEach(checkbox => {
+                selectedProjects.push(checkbox.dataset.projectId);
+            });
+            return selectedProjects;
+        }
+
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.selectProject');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        // Function to handle go back button
+        function goBack() {
+            window.location.href = "{% url 'homepage' %}";
+        }
+        // Filter projects by name
+        function filterProjects() {
+            console.log('Filter projects triggered');
+            const searchBox = document.getElementById('searchBox');
+            const filter = searchBox.value.toLowerCase();
+            const rows = document.querySelectorAll('#projectTableBody tr');
+        
+            rows.forEach(row => {
+                const projectNameCell = row.querySelector('td:nth-child(2)');
+                if (projectNameCell) {
+                    const projectName = projectNameCell.textContent.trim().toLowerCase();
+                    if (projectName.includes(filter)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

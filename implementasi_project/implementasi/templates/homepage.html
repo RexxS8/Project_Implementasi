@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Utama</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-right a {
+            padding: 5px 10px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            height: 20px;
+            width: 50px;
+        }
+
+        .header-right span {
+            font-weight: 500;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 20px;
+            background-color: #fff;
+        }
+
+        .welcome-section {
+            width: 50%;
+        }
+
+        .welcome-section h2 {
+            font-size: 32px;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .welcome-section .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            background-color: #f8f8f8;
+        }
+
+        .logo-section h1 {
+            font-size: 48px;
+            color: #000;
+        }
+
+        .charts-section {
+            padding: 40px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .charts-section h3 {
+            font-size: 28px;
+        }
+
+        .charts-section p {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .chart-container {
+            margin: 20px 0;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            width: 300px;
+            padding: 20px;
+            margin: 0 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box h4 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .stat-box span {
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Sys1mplement</h1>
+        </div>
+        <div class="header-right">
+            <span> <img src="https://img.icons8.com/?size=100&id=zxB19VPoVLjK&format=png&color=000000" alt="User Icon" class="user-icon" width="15" height="15"> USER</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h2>Hello Everyone!</h2>
+            <p>Aplikasi Implementation System adalah perangkat lunak yang dirancang untuk membantu meng-organisir dalam merencanakan, mengelola, dan melaksanakan proses implementasi berbagai sistem atau proyek.</p>
+            <a href="{% url 'project_list' %}" class="button">Data Project</a>
+        </div>
+
+        <div class="logo-section">
+            <h1>Sys1mplement</h1>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <h3>Project Charts</h3>
+        <p>Charts dibawah ini diambil berdasarkan data projects yang ada.</p>
+        <div class="chart-container">
+            <canvas id="statusChart" width="400" height="200"></canvas>
+        </div>
+        <div class="stats-container">
+            <div class="stat-box">
+                <h4>Jumlah Project</h4>
+                <span id="totalProjects"></span>
+            </div>
+            <div class="stat-box">
+                <h4>Project Selesai</h4>
+                <span id="completionPercentage"></span><span>%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projectData = {
+            total: {{ total_projects }},
+            selesai: {{ completed_projects }},
+            berlangsung: {{ ongoing_projects }},
+            gagal: {{ failed_projects }}
+        };
+
+        const completionPercentage = projectData.total > 0 ? (projectData.selesai / projectData.total * 100).toFixed(2) : 0;
+
+        document.getElementById('totalProjects').innerText = projectData.total;
+        document.getElementById('completionPercentage').innerText = completionPercentage;
+
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Selesai', 'Berlangsung', 'Gagal'],
+                datasets: [{
+                    label: 'Jumlah Proyek',
+                    data: [projectData.selesai, projectData.berlangsung, projectData.gagal],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
